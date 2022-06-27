@@ -1,22 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="./style.css">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
     <title>Document</title>
 </head>
 <body>
 
+    <div class="buttons">
+        <button class="move rock">Rock</button>
+        <button class="move paper">Paper</button>
+        <button class="move scissors">Scissors</button>
+    </div>
+   
     <script>
-
-        playGame();
-
-        function userPlay() {
-            const input = prompt('Enter a move.').toLowerCase();
-            if (input == 'rock' || input == 'paper' || input == 'scissors') return input;
-            alert('Please enter a valid move.')
+        function moveHandler(event) {
+             const className = event.target.className
+             if (className.includes('rock')) {
+                playRound('rock', computerPlay())
+             } else if (className.includes('paper')) {
+                playRound('paper', computerPlay())
+             } else {
+                playRound('scissors', computerPlay())
+             }
         }
+
+        const buttons = document.querySelectorAll('.move');
+        buttons.forEach(
+            function(currentValue) {
+            currentValue.addEventListener('click', moveHandler)
+        });
+
 
         function computerPlay() {
             min = Math.ceil(1);
@@ -28,72 +46,43 @@
         }
 
         function playRound(userSelection, computerSelection) {
+            console.log(userSelection, computerSelection)
             if (userSelection == computerSelection) {
-                announceRoundResults(userSelection, computerSelection);
-                return returnRoundWinner('tie');
+                returnRoundWinner('tie');
             } else if (userSelection == 'rock') {
                 if (computerSelection == 'scissors') {
-                    announceRoundResults(userSelection, computerSelection);
-                    return returnRoundWinner('user');
+                    returnRoundWinner('user');
                 } else {
-                    announceRoundResults(userSelection, computerSelection);
-                    return returnRoundWinner('computer');
+                    returnRoundWinner('computer');
                 }
             } else if (userSelection == 'paper') {
                 if (computerSelection == 'rock') {
-                    announceRoundResults(userSelection, computerSelection);
-                    return returnRoundWinner('user');
+                    returnRoundWinner('user');
                 } else {
-                    announceRoundResults(userSelection, computerSelection);
-                    return returnRoundWinner('computer');
+                    returnRoundWinner('computer');
                 }
             } else if (userSelection == 'scissors') {
                 if (computerSelection == 'paper') {
-                    announceRoundResults(userSelection, computerSelection);
-                    return returnRoundWinner('user');
+                    returnRoundWinner('user');
                 } else {
-                    announceRoundResults(userSelection, computerSelection);
-                    return returnRoundWinner('computer');
+                    returnRoundWinner('computer');
                 }
             }
-        }
-
-        function announceRoundResults(userResults, computerResults) {
-            alert("User chose " + userResults + " and computer chose " + computerResults);
         }
 
         function returnRoundWinner(roundWinner) {
             if (roundWinner == 'tie') {
                 alert('Tie!');
-                return 'tie';
             } else if (roundWinner == 'user') {
                 alert('User wins!');
-                return 'user';
             } else {
                 alert('Computer wins!');
-                return 'computer';
             }
         }
 
         
         
 
-        function playGame() {
-            alert("Game is starting!");
-            let userScore = 1;
-            let computerScore = 1;
-            for (i = 0; i < 5; i++) {
-                let roundResults = playRound(userPlay(), computerPlay());
-                if (roundResults == 'user') {
-                    userScore = userScore + 1;
-                } else if (roundResults == 'computer') {
-                    computerScore = computerScore +1;
-                } else {
-
-                }
-            }
-            announceGameWinner(userScore, computerScore);
-        }
 
         function announceGameWinner(userScore, computerScore) {
             if (userScore == computerScore) {
@@ -105,12 +94,6 @@
             }
         }
 
-        
-
-
-
-        
-       
 
     </script>
 </body>
